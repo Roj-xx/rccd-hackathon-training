@@ -1,23 +1,10 @@
 import { useState } from 'react';
-import AppHeader from './components/AppHeader.jsx';
+import AppSidebar from './components/AppSidebar.jsx';
 import ResponderHome from './screens/ResponderHome.jsx';
 import CameraInspection from './screens/CameraInspection.jsx';
 import CasualtyVerification from './screens/CasualtyVerification.jsx';
 import RescueTeamView from './screens/RescueTeamView.jsx';
 import { defaultReport, detection, mockTimestamp, responder } from './data/mockData.js';
-
-const STEPS = [
-  { id: 'home', short: 'Home' },
-  { id: 'camera', short: 'Camera' },
-  { id: 'verification', short: 'Verify' },
-  { id: 'rescue', short: 'Rescue' },
-];
-
-const BACK_TARGETS = {
-  camera: { screen: 'home', label: 'Home' },
-  verification: { screen: 'camera', label: 'Camera' },
-  rescue: { screen: 'home', label: 'Home' },
-};
 
 function buildReport(assessment) {
   return {
@@ -38,8 +25,6 @@ export default function App() {
   const [report, setReport] = useState(null);
   const [verificationStart, setVerificationStart] = useState('review');
 
-  const back = BACK_TARGETS[screen];
-
   const handleSave = (assessment) => {
     setReport(buildReport(assessment));
     setScreen('rescue');
@@ -52,20 +37,18 @@ export default function App() {
 
   return (
     <div className="app">
-      <AppHeader
-        steps={STEPS}
-        currentStepId={screen}
-        onBack={back ? () => setScreen(back.screen) : undefined}
-        backLabel={back?.label}
-      />
+      <AppSidebar current={screen} onNavigate={setScreen} />
 
-      <main className="screen" key={screen}>
+      <div className="app__main" key={screen}>
         {screen === 'home' && (
           <ResponderHome onStart={() => setScreen('camera')} />
         )}
 
         {screen === 'camera' && (
-          <CameraInspection onConfirmDetection={handleConfirmDetection} />
+          <CameraInspection
+            onBack={() => setScreen('home')}
+            onConfirmDetection={handleConfirmDetection}
+          />
         )}
 
         {screen === 'verification' && (
@@ -82,7 +65,7 @@ export default function App() {
             onStartNew={() => setScreen('home')}
           />
         )}
-      </main>
+      </div>
     </div>
   );
 }

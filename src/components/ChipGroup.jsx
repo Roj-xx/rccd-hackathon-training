@@ -1,5 +1,5 @@
 function chipTone(option) {
-  if (option === 'High') return 'chip--danger';
+  if (option === 'High' || option === 'Critical') return 'chip--danger';
   if (option === 'Medium') return 'chip--warning';
   return '';
 }

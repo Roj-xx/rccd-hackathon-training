@@ -23,6 +23,8 @@ export const camera = {
   status: 'Simulation Mode',
   device: 'Portable Cam Unit 01',
   inspection: 'INSP-0042',
+  battery: '86%',
+  connection: 'Camera Connected',
 };
 
 export const operationStatus = 'Active';
@@ -32,10 +34,11 @@ export const detection = {
   searchArea: 'Building A - Sector 03',
   visibility: 'Partially visible',
   movement: 'Appears immobile',
-  access: 'Appears obstructed',
+  access: 'Obstructed',
   priority: 'High',
   cvLabel: 'PERSON',
   confidence: 87,
+  detectedAt: '06 Oct 2026, 09:41 AM',
 };
 
 export const scanSteps = [
@@ -45,18 +48,23 @@ export const scanSteps = [
 ];
 
 export const assessmentOptions = {
-  visibility: ['Partially visible', 'Clearly visible', 'Not visible'],
-  movement: ['Appears immobile', 'Seen moving', 'Unknown'],
-  access: ['Appears obstructed', 'Accessible', 'Unknown'],
-  condition: ['Possible injured/trapped', 'Appears stable', 'Unknown'],
-  priority: ['High', 'Medium', 'Low'],
+  visibility: ['Clearly visible', 'Partially visible', 'Not visible'],
+  movement: ['Appears mobile', 'Appears immobile', 'Unable to determine'],
+  condition: [
+    'No obvious injury',
+    'Possible injured',
+    'Severely injured',
+    'Unable to determine',
+  ],
+  access: ['Accessible', 'Obstructed', 'Appears trapped'],
+  priority: ['Low', 'Medium', 'High', 'Critical'],
 };
 
 export const defaultAssessment = {
   visibility: detection.visibility,
   movement: detection.movement,
   access: detection.access,
-  condition: 'Possible injured/trapped',
+  condition: 'Possible injured',
   priority: detection.priority,
   notes: '',
 };
@@ -68,6 +76,13 @@ export const recentReports = [
     status: 'Possible Casualty',
     priority: 'Medium',
     time: '06 Oct 2026, 07:58 AM',
+    responder: 'Responder Maria Santos',
+    visibility: 'Clearly visible',
+    movement: 'Appears immobile',
+    condition: 'Possible injured',
+    detection: 'Possible person detected',
+    notes:
+      'Observed through corridor camera near east stairwell. Approach route appears clear.',
   },
   {
     id: 'RPT-0139',
@@ -75,6 +90,13 @@ export const recentReports = [
     status: 'Dismissed',
     priority: 'Low',
     time: '06 Oct 2026, 07:21 AM',
+    responder: 'Responder Juan Dela Cruz',
+    visibility: 'Not visible',
+    movement: 'Unable to determine',
+    condition: 'No obvious injury',
+    detection: 'Dismissed after review',
+    notes:
+      'No person confirmed in frame after a second scan. Area flagged for re-check.',
   },
 ];
 
@@ -83,8 +105,8 @@ export const defaultReport = {
   status: 'Possible Casualty',
   location: 'Building A - Sector 03',
   detection: detection.result,
-  assessment: ['Partially visible', 'Appears immobile', 'Appears obstructed'],
-  condition: 'Possible injured/trapped',
+  assessment: ['Partially visible', 'Appears immobile', 'Obstructed'],
+  condition: 'Possible injured',
   priority: 'High',
   verifiedBy: 'Responder Juan Dela Cruz',
   timestamp: '06 Oct 2026, 09:42 AM',

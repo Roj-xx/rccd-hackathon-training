@@ -174,3 +174,65 @@ export function IconArrowRight(props) {
     </svg>
   );
 }
+
+export function IconHome(props) {
+  return (
+    <svg {...baseProps} {...props}>
+      <path d="M4 11.2 12 4l8 7.2V19a1.5 1.5 0 0 1-1.5 1.5H15V15H9v5.5H5.5A1.5 1.5 0 0 1 4 19Z" />
+    </svg>
+  );
+}
+
+export function IconClipboard(props) {
+  return (
+    <svg {...baseProps} {...props}>
+      <rect x="5" y="5.5" width="14" height="15" rx="2" />
+      <path d="M9 5.5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5.5V7H9Z" />
+      <path d="M8.5 11h7M8.5 14.5h5" />
+    </svg>
+  );
+}
+
+export function IconShield(props) {
+  return (
+    <svg {...baseProps} {...props}>
+      <path d="M12 3.5 19 6v5.5c0 4.4-2.9 7.4-7 9-4.1-1.6-7-4.6-7-9V6Z" />
+      <path d="m9 11.8 2.2 2.2 4-4.3" />
+    </svg>
+  );
+}
+
+export function IconGear(props) {
+  return (
+    <svg {...baseProps} {...props}>
+      <circle cx="12" cy="12" r="3.2" />
+      <path d="M12 3v2.4M12 18.6V21M3 12h2.4M18.6 12H21M5.6 5.6l1.7 1.7M16.7 16.7l1.7 1.7M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7" />
+    </svg>
+  );
+}
+
+export function IconBattery(props) {
+  return (
+    <svg {...baseProps} {...props}>
+      <rect x="3" y="8" width="16" height="8" rx="2" />
+      <path d="M21 10.5v3" />
+      <path d="M5.8 10.5h4.4v3H5.8z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function IconPause(props) {
+  return (
+    <svg {...baseProps} {...props}>
+      <path d="M9 5.5v13M15 5.5v13" />
+    </svg>
+  );
+}
+
+export function IconPlay(props) {
+  return (
+    <svg {...baseProps} {...props}>
+      <path d="M7.5 5.2v13.6L18.5 12Z" />
+    </svg>
+  );
+}

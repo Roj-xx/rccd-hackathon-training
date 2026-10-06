@@ -31,7 +31,15 @@ export const detection = {
   movement: 'Appears immobile',
   access: 'Appears obstructed',
   priority: 'High',
+  cvLabel: 'PERSON',
+  confidence: 87,
 };
+
+export const scanSteps = [
+  'Detecting objects...',
+  'Scanning visible area...',
+  'Analyzing frame...',
+];
 
 export const assessmentOptions = {
   visibility: ['Partially visible', 'Clearly visible', 'Not visible'],

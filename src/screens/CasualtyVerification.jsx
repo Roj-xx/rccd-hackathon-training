@@ -38,8 +38,8 @@ const ASSESSMENT_FIELDS = [
   { key: 'priority', legend: 'Priority' },
 ];
 
-export default function CasualtyVerification({ onDismiss, onSave }) {
-  const [phase, setPhase] = useState('review');
+export default function CasualtyVerification({ onDismiss, onSave, startPhase = 'review' }) {
+  const [phase, setPhase] = useState(startPhase);
   const [assessment, setAssessment] = useState(defaultAssessment);
 
   const setField = (key, value) => {

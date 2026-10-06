@@ -1,17 +1,66 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Badge from '../components/Badge.jsx';
+import DisasterScene from '../components/DisasterScene.jsx';
 import {
   IconAlert,
   IconCamera,
+  IconCheck,
   IconMapPin,
   IconRadio,
   IconScan,
+  IconX,
 } from '../components/Icons.jsx';
-import { camera, detection, responder } from '../data/mockData.js';
+import { camera, detection, responder, scanSteps } from '../data/mockData.js';
 import '../styles/camera.css';
 
-export default function CameraInspection({ onAnalyze }) {
+const STATUS_READY = 'ready';
+const STATUS_ANALYZING = 'analyzing';
+const STATUS_DETECTED = 'detected';
+
+function StatusBadge({ status }) {
+  if (status === STATUS_ANALYZING) {
+    return (
+      <Badge tone="info" className="feed__status">
+        <span className="feed__pulse" aria-hidden />
+        Analyzing
+      </Badge>
+    );
+  }
+
+  if (status === STATUS_DETECTED) {
+    return (
+      <Badge tone="danger" className="feed__status">
+        <span className="feed__pulse" aria-hidden />
+        Possible Person
+      </Badge>
+    );
+  }
+
+  return (
+    <Badge tone="warning" className="feed__status">
+      <span className="feed__pulse" aria-hidden />
+      {camera.status}
+    </Badge>
+  );
+}
+
+export default function CameraInspection({ onConfirmDetection }) {
+  const [status, setStatus] = useState(STATUS_READY);
+  const [scanStep, setScanStep] = useState(0);
   const [frames, setFrames] = useState([]);
+
+  useEffect(() => {
+    if (status !== STATUS_ANALYZING) return undefined;
+
+    const timers = [
+      setTimeout(() => setScanStep(0), 60),
+      setTimeout(() => setScanStep(1), 560),
+      setTimeout(() => setScanStep(2), 1060),
+      setTimeout(() => setStatus(STATUS_DETECTED), 1560),
+    ];
+
+    return () => timers.forEach(clearTimeout);
+  }, [status]);
 
   const handleCapture = () => {
     setFrames((current) => {
@@ -23,10 +72,28 @@ export default function CameraInspection({ onAnalyze }) {
     });
   };
 
+  const handleAnalyze = () => {
+    setScanStep(0);
+    setStatus(STATUS_ANALYZING);
+  };
+
+  const handleDismiss = () => {
+    setScanStep(0);
+    setStatus(STATUS_READY);
+  };
+
   return (
     <div className="camera">
       <section className="panel camera__stage">
-        <div className="feed">
+        <div className={`feed feed--${status}`}>
+          <div className="feed__scene">
+            <DisasterScene
+              detected={status === STATUS_DETECTED}
+              label={detection.cvLabel}
+              confidence={detection.confidence}
+            />
+          </div>
+
           <div className="feed__grid" aria-hidden />
           <div className="feed__scan" aria-hidden />
 
@@ -40,24 +107,37 @@ export default function CameraInspection({ onAnalyze }) {
               <IconCamera />
               {camera.viewLabel}
             </span>
-            <Badge tone="warning" className="feed__status">
-              <span className="feed__pulse" aria-hidden />
-              {camera.status}
-            </Badge>
+            <StatusBadge status={status} />
           </div>
 
-          <div className="feed__placeholder">
-            <div className="feed__frame">
-              <span className="feed__frame-icon">
+          {status === STATUS_READY && (
+            <p className="feed__hint">
+              Press <strong>Analyze</strong> to scan this frame
+            </p>
+          )}
+
+          {status === STATUS_ANALYZING && (
+            <div className="scan-overlay" role="status" aria-live="polite">
+              <span className="scan-overlay__icon">
                 <IconScan />
               </span>
-              <p className="feed__frame-title">Disaster Scene Preview</p>
-              <p className="feed__frame-text">
-                Simulated camera feed of the search area will appear here.
-                Detection behavior is added in Milestone 2.
-              </p>
+              <p className="scan-overlay__title">Analyzing Camera Frame</p>
+              <p className="scan-overlay__msg">{scanSteps[scanStep]}</p>
+              <div className="scan-progress" aria-hidden>
+                <span />
+              </div>
             </div>
-          </div>
+          )}
+
+          {status === STATUS_DETECTED && (
+            <div className="detect-banner" role="status" aria-live="polite">
+              <span className="detect-banner__dot" aria-hidden />
+              Possible Person Detected
+              <span className="detect-banner__conf">
+                {detection.confidence}% confidence
+              </span>
+            </div>
+          )}
 
           <div className="feed__bar feed__bar--bottom">
             <span className="feed__meta">
@@ -117,35 +197,127 @@ export default function CameraInspection({ onAnalyze }) {
           </li>
         </ul>
 
-        <p className="camera__instructions">
-          Direct the portable camera into the unsafe area, capture reference
-          frames, then run analysis to check for possible persons.
-        </p>
+        {status === STATUS_READY && (
+          <>
+            <p className="camera__instructions">
+              Direct the portable camera into the unsafe area, capture reference
+              frames, then run analysis to check for possible persons.
+            </p>
 
-        <div className="camera__actions">
-          <button
-            type="button"
-            className="btn btn--ghost btn--lg btn--block"
-            onClick={handleCapture}
-          >
-            <IconCamera />
-            Capture
-          </button>
-          <button
-            type="button"
-            className="btn btn--primary btn--lg btn--block"
-            onClick={onAnalyze}
-          >
-            <IconScan />
-            Analyze
-          </button>
-        </div>
+            <div className="camera__actions">
+              <button
+                type="button"
+                className="btn btn--ghost btn--lg btn--block"
+                onClick={handleCapture}
+              >
+                <IconCamera />
+                Capture
+              </button>
+              <button
+                type="button"
+                className="btn btn--primary btn--lg btn--block"
+                onClick={handleAnalyze}
+              >
+                <IconScan />
+                Analyze
+              </button>
+            </div>
 
-        <p className="camera__note">
-          <IconAlert />
-          Simulation only — Analyze continues the prototype flow. Real
-          detection arrives in Milestone 2.
-        </p>
+            <p className="camera__note">
+              <IconAlert />
+              Simulation only — detection is mocked for this prototype.
+            </p>
+          </>
+        )}
+
+        {status === STATUS_ANALYZING && (
+          <>
+            <div className="analyzing" role="status" aria-live="polite">
+              <span className="eyebrow">Computer vision</span>
+              <h3 className="analyzing__title">Analyzing camera frame…</h3>
+              <ul className="analyzing__steps">
+                {scanSteps.map((step, index) => {
+                  const state =
+                    index < scanStep
+                      ? 'is-done'
+                      : index === scanStep
+                        ? 'is-active'
+                        : '';
+                  return (
+                    <li className={`analyzing__step ${state}`.trim()} key={step}>
+                      <span className="analyzing__marker" aria-hidden>
+                        {index < scanStep ? <IconCheck /> : <span className="analyzing__dot" />}
+                      </span>
+                      {step}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            <div className="camera__actions">
+              <button type="button" className="btn btn--ghost btn--lg btn--block" disabled>
+                <IconCamera />
+                Capture
+              </button>
+              <button type="button" className="btn btn--primary btn--lg btn--block" disabled>
+                <IconScan />
+                Analyzing…
+              </button>
+            </div>
+          </>
+        )}
+
+        {status === STATUS_DETECTED && (
+          <div className="detect-result" role="status" aria-live="polite">
+            <span className="detect-result__eyebrow">Computer vision result</span>
+            <h3 className="detect-result__title">Possible Person Detected</h3>
+            <p className="detect-result__text">
+              Review the detection before recording a casualty report. The
+              system only suggests — you make the final decision.
+            </p>
+
+            <ul className="detect-result__stats">
+              <li>
+                <span>Label</span>
+                <strong>{detection.cvLabel}</strong>
+              </li>
+              <li>
+                <span>Confidence</span>
+                <strong>{detection.confidence}%</strong>
+              </li>
+              <li>
+                <span>Status</span>
+                <strong>Awaiting verification</strong>
+              </li>
+            </ul>
+
+            <div className="camera__actions">
+              <button
+                type="button"
+                className="btn btn--primary btn--lg btn--block"
+                onClick={onConfirmDetection}
+              >
+                <IconCheck />
+                Confirm Detection
+              </button>
+              <button
+                type="button"
+                className="btn btn--ghost btn--lg btn--block"
+                onClick={handleDismiss}
+              >
+                <IconX />
+                Dismiss
+              </button>
+            </div>
+
+            <p className="camera__note">
+              <IconAlert />
+              Computer vision suggests, the responder verifies. Not a medical
+              diagnosis.
+            </p>
+          </div>
+        )}
       </aside>
     </div>
   );

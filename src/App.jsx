@@ -36,12 +36,18 @@ function buildReport(assessment) {
 export default function App() {
   const [screen, setScreen] = useState('home');
   const [report, setReport] = useState(null);
+  const [verificationStart, setVerificationStart] = useState('review');
 
   const back = BACK_TARGETS[screen];
 
   const handleSave = (assessment) => {
     setReport(buildReport(assessment));
     setScreen('rescue');
+  };
+
+  const handleConfirmDetection = () => {
+    setVerificationStart('assessment');
+    setScreen('verification');
   };
 
   return (
@@ -59,13 +65,12 @@ export default function App() {
         )}
 
         {screen === 'camera' && (
-          <CameraInspection
-            onAnalyze={() => setScreen('verification')}
-          />
+          <CameraInspection onConfirmDetection={handleConfirmDetection} />
         )}
 
         {screen === 'verification' && (
           <CasualtyVerification
+            startPhase={verificationStart}
             onDismiss={() => setScreen('camera')}
             onSave={handleSave}
           />

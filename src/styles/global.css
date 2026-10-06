@@ -435,6 +435,12 @@ button {
   border-color: rgba(52, 211, 153, 0.4);
 }
 
+.badge--info {
+  color: #7dd3fc;
+  background: rgba(56, 189, 248, 0.13);
+  border-color: rgba(56, 189, 248, 0.42);
+}
+
 /* ---------- Info rows ---------- */
 
 .info-list {

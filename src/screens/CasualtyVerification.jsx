@@ -136,9 +136,9 @@ export default function CasualtyVerification({ onDismiss, onSave, startPhase = '
         </header>
 
         <div className="assessment__context">
-          <Badge tone="neutral">
+          <Badge tone="info">
             <IconMapPin />
-            {detection.searchArea}
+            Search Area · {detection.searchArea}
           </Badge>
           <Badge tone="neutral">{detection.result}</Badge>
           <Badge tone="neutral">Responder {responder.name}</Badge>

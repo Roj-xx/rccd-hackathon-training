@@ -7,9 +7,10 @@ import {
   IconClock,
   IconFile,
   IconMapPin,
+  IconRadio,
   IconUser,
 } from '../components/Icons.jsx';
-import { appInfo, recentReports, responder } from '../data/mockData.js';
+import { appInfo, operationStatus, recentReports, responder } from '../data/mockData.js';
 import '../styles/home.css';
 
 function priorityTone(priority) {
@@ -23,7 +24,7 @@ export default function ResponderHome({ onStart }) {
     <div className="home">
       <section className="panel home__hero">
         <div className="home__hero-copy">
-          <span className="eyebrow">Field Prototype · Milestone 1</span>
+          <span className="eyebrow">Interactive Field Prototype</span>
           <h1 className="home__title">{appInfo.name}</h1>
           <p className="home__lead">{appInfo.description}</p>
         </div>
@@ -75,6 +76,17 @@ export default function ResponderHome({ onStart }) {
               <span>
                 <span className="info-row__label">Search Area</span>
                 <span className="info-row__value">{responder.searchArea}</span>
+              </span>
+            </li>
+            <li className="info-row">
+              <span className="info-row__icon">
+                <IconRadio />
+              </span>
+              <span>
+                <span className="info-row__label">Operation Status</span>
+                <span className="info-row__value">
+                  <Badge tone="success">{operationStatus}</Badge>
+                </span>
               </span>
             </li>
           </ul>

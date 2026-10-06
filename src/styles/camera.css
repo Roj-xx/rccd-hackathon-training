@@ -7,16 +7,86 @@
 
 .camera__stage {
   padding: 16px;
+  min-width: 0;
+}
+
+/* ---------- Demo state indicator ---------- */
+
+.state-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+
+.state-flow__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.05);
+  color: var(--text-faint);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.state-flow__item + .state-flow__item::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  margin-right: 1px;
+  background: var(--border-strong);
+}
+
+.state-flow__item.is-current {
+  color: #fdba74;
+  border-color: rgba(249, 115, 22, 0.45);
+  background: rgba(249, 115, 22, 0.1);
+}
+
+.state-flow__item.is-done {
+  color: var(--text-muted);
+}
+
+.state-flow__marker {
+  width: 15px;
+  height: 15px;
+  display: grid;
+  place-items: center;
+}
+
+.state-flow__marker svg {
+  width: 14px;
+  height: 14px;
+  color: var(--success);
+}
+
+.state-flow__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-faint);
+}
+
+.state-flow__item.is-current .state-flow__dot {
+  background: var(--primary);
 }
 
 /* ---------- Feed ---------- */
 
 .feed {
   position: relative;
+  width: 100%;
+  min-width: 0;
   aspect-ratio: 16 / 9;
   min-height: 400px;
   overflow: hidden;
-  border-radius: 13px;
+  border-radius: 12px;
   border: 1px solid var(--border-strong);
   background: #060a10;
   transition: border-color 0.3s ease;

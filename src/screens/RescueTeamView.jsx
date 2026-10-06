@@ -167,8 +167,8 @@ export default function RescueTeamView({ report, onStartNew }) {
       </article>
 
       <p className="rescue__note">
-        Milestone 1 — reports are held in local application state. No backend,
-        live sync, or dispatch integration is included yet.
+        Reports are held in local application state for this prototype. No
+        backend, live sync, or dispatch integration is included.
       </p>
     </div>
   );

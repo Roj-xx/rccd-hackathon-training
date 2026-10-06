@@ -22,7 +22,10 @@ export const camera = {
   viewLabel: 'CAMERA VIEW',
   status: 'Simulation Mode',
   device: 'Portable Cam Unit 01',
+  inspection: 'INSP-0042',
 };
+
+export const operationStatus = 'Active';
 
 export const detection = {
   result: 'Possible person detected',

@@ -37,7 +37,7 @@
   position: relative;
   overflow: hidden;
   padding: 30px 32px 28px;
-  border-radius: 18px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 40%),
@@ -90,8 +90,8 @@
 }
 
 .report-card__priority-badge {
-  padding: 9px 16px;
-  font-size: 14px;
+  padding: 10px 19px;
+  font-size: 15px;
   letter-spacing: 0.1em;
   box-shadow: 0 8px 22px rgba(239, 68, 68, 0.28);
 }

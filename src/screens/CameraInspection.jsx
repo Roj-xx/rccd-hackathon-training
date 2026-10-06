@@ -17,6 +17,41 @@ const STATUS_READY = 'ready';
 const STATUS_ANALYZING = 'analyzing';
 const STATUS_DETECTED = 'detected';
 
+const DEMO_STATES = [
+  { id: STATUS_READY, label: 'Ready to inspect' },
+  { id: STATUS_ANALYZING, label: 'Analyzing camera frame' },
+  { id: STATUS_DETECTED, label: 'Possible person detected' },
+];
+
+function StateFlow({ current }) {
+  const currentIndex = DEMO_STATES.findIndex((state) => state.id === current);
+
+  return (
+    <div className="state-flow" aria-label="Inspection state">
+      {DEMO_STATES.map((state, index) => {
+        const modifier =
+          index === currentIndex
+            ? 'is-current'
+            : index < currentIndex
+              ? 'is-done'
+              : '';
+        return (
+          <span
+            className={`state-flow__item ${modifier}`.trim()}
+            key={state.id}
+            aria-current={index === currentIndex ? 'step' : undefined}
+          >
+            <span className="state-flow__marker" aria-hidden>
+              {index < currentIndex ? <IconCheck /> : <span className="state-flow__dot" />}
+            </span>
+            {state.label}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
 function StatusBadge({ status }) {
   if (status === STATUS_ANALYZING) {
     return (
@@ -85,6 +120,8 @@ export default function CameraInspection({ onConfirmDetection }) {
   return (
     <div className="camera">
       <section className="panel camera__stage">
+        <StateFlow current={status} />
+
         <div className={`feed feed--${status}`}>
           <div className="feed__scene">
             <DisasterScene
@@ -193,6 +230,15 @@ export default function CameraInspection({ onConfirmDetection }) {
               <span className="info-row__value">
                 <Badge tone="warning">{camera.status}</Badge>
               </span>
+            </span>
+          </li>
+          <li className="info-row">
+            <span className="info-row__icon">
+              <IconScan />
+            </span>
+            <span>
+              <span className="info-row__label">Inspection</span>
+              <span className="info-row__value mono">{camera.inspection}</span>
             </span>
           </li>
         </ul>

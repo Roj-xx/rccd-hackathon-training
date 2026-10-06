@@ -1,0 +1,247 @@
+.verify {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---------- Warning banner (review phase) ---------- */
+
+.alert-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 26px 28px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(245, 158, 11, 0.42);
+  background:
+    linear-gradient(135deg, rgba(245, 158, 11, 0.16), rgba(245, 158, 11, 0.04)),
+    var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.alert-banner__icon {
+  width: 52px;
+  height: 52px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: #fcd34d;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+}
+
+.alert-banner__icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.alert-banner__copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.alert-banner__priority {
+  flex: none;
+  margin-top: 4px;
+}
+
+.verify__title {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  font-weight: 750;
+}
+
+.verify__title--sm {
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+}
+
+.verify__lead {
+  margin-top: 10px;
+  max-width: 78ch;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+/* ---------- Detection panel ---------- */
+
+.verify__panel {
+  padding: 26px 28px 28px;
+}
+
+.detect-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+  gap: 12px;
+}
+
+.detect-card {
+  padding: 16px 17px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--panel-2);
+}
+
+.detect-card__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.detect-card__label svg {
+  width: 14px;
+  height: 14px;
+}
+
+.detect-card__value {
+  display: block;
+  margin-top: 9px;
+  font-size: 16.5px;
+  font-weight: 680;
+  letter-spacing: -0.01em;
+}
+
+.detect-card--alert {
+  border-color: rgba(245, 158, 11, 0.36);
+  background: rgba(245, 158, 11, 0.07);
+}
+
+.detect-card--alert .detect-card__label {
+  color: #fcd34d;
+}
+
+.detect-card--danger {
+  border-color: rgba(239, 68, 68, 0.45);
+  background: rgba(239, 68, 68, 0.09);
+}
+
+.detect-card--danger .detect-card__label {
+  color: #fca5a5;
+}
+
+.detect-card--danger .detect-card__value {
+  color: #fca5a5;
+  font-size: 18px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.verify__disclaimer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 13px 16px;
+  border-radius: var(--radius-sm);
+  background: rgba(148, 163, 184, 0.06);
+  border: 1px dashed var(--border-strong);
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.verify__disclaimer svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: var(--text-faint);
+}
+
+.verify__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- Assessment phase ---------- */
+
+.assessment__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.assessment__head .badge {
+  margin-left: auto;
+  flex: none;
+}
+
+.assessment__icon {
+  width: 50px;
+  height: 50px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: var(--primary);
+  background: linear-gradient(160deg, rgba(249, 115, 22, 0.2), rgba(249, 115, 22, 0.06));
+  border: 1px solid rgba(249, 115, 22, 0.4);
+}
+
+.assessment__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.assessment__context {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 24px;
+}
+
+.assessment__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px 26px;
+}
+
+.chip-group--notes {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 860px) {
+  .alert-banner {
+    flex-wrap: wrap;
+    padding: 22px 20px;
+  }
+
+  .alert-banner__priority {
+    order: 3;
+    margin-top: 0;
+  }
+
+  .verify__panel {
+    padding: 22px 20px 24px;
+  }
+
+  .assessment__head {
+    flex-wrap: wrap;
+  }
+
+  .assessment__head .badge {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .verify__actions .btn {
+    width: 100%;
+  }
+
+  .assessment__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

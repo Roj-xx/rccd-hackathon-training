@@ -1,0 +1,358 @@
+.camera {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 20px;
+  align-items: start;
+}
+
+.camera__stage {
+  padding: 16px;
+}
+
+/* ---------- Feed ---------- */
+
+.feed {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  min-height: 400px;
+  overflow: hidden;
+  border-radius: 13px;
+  border: 1px solid var(--border-strong);
+  background:
+    radial-gradient(120% 95% at 50% 0%, #101c2c 0%, #0a111b 55%, #060a10 100%);
+}
+
+.feed__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: radial-gradient(115% 100% at 50% 50%, #000 55%, transparent 100%);
+}
+
+.feed__scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 130px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(56, 189, 248, 0.1),
+    transparent
+  );
+  animation: feed-scan 4.6s linear infinite;
+}
+
+@keyframes feed-scan {
+  from {
+    top: -130px;
+  }
+  to {
+    top: 100%;
+  }
+}
+
+.feed__bracket {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border: 2px solid rgba(249, 115, 22, 0.65);
+  z-index: 3;
+}
+
+.feed__bracket--tl {
+  top: 14px;
+  left: 14px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 6px;
+}
+
+.feed__bracket--tr {
+  top: 14px;
+  right: 14px;
+  border-left: 0;
+  border-bottom: 0;
+  border-top-right-radius: 6px;
+}
+
+.feed__bracket--bl {
+  bottom: 14px;
+  left: 14px;
+  border-right: 0;
+  border-top: 0;
+  border-bottom-left-radius: 6px;
+}
+
+.feed__bracket--br {
+  bottom: 14px;
+  right: 14px;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 6px;
+}
+
+.feed__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 20px;
+}
+
+.feed__bar--top {
+  top: 0;
+  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(4, 7, 11, 0.85), transparent);
+}
+
+.feed__bar--bottom {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(4, 7, 11, 0.85), transparent);
+  flex-wrap: wrap;
+}
+
+.feed__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #fdba74;
+}
+
+.feed__label svg {
+  width: 17px;
+  height: 17px;
+}
+
+.feed__status {
+  backdrop-filter: blur(6px);
+}
+
+.feed__pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--warning);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.55);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 0 5px rgba(245, 158, 11, 0);
+  }
+}
+
+.feed__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.feed__meta svg {
+  width: 14px;
+  height: 14px;
+  color: var(--text-faint);
+}
+
+.feed__meta--mono {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+}
+
+/* ---------- Placeholder scene ---------- */
+
+.feed__placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 56px 24px;
+}
+
+.feed__frame {
+  max-width: 460px;
+  padding: 30px 38px;
+  text-align: center;
+  border: 1.5px dashed rgba(148, 163, 184, 0.4);
+  border-radius: 16px;
+  background: rgba(9, 13, 19, 0.42);
+  backdrop-filter: blur(3px);
+}
+
+.feed__frame-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  color: var(--info);
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.feed__frame-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.feed__frame-title {
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.feed__frame-text {
+  margin-top: 8px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+/* ---------- Captured frames strip ---------- */
+
+.camera__frames {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding: 4px 4px 0;
+}
+
+.camera__frames-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.camera__frames-empty {
+  font-size: 13px;
+  color: var(--text-faint);
+}
+
+.frame-strip {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.frame-thumb {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  border-radius: 9px;
+  border: 1px dashed rgba(148, 163, 184, 0.45);
+  background: rgba(148, 163, 184, 0.06);
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+}
+
+.frame-thumb svg {
+  width: 14px;
+  height: 14px;
+  color: var(--info);
+}
+
+/* ---------- Side panel ---------- */
+
+.camera__side {
+  padding: 24px 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: sticky;
+  top: 88px;
+}
+
+.camera__instructions {
+  font-size: 14px;
+  color: var(--text-muted);
+  padding: 14px 15px;
+  border-radius: var(--radius-sm);
+  background: rgba(56, 189, 248, 0.06);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+}
+
+.camera__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.camera__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-faint);
+}
+
+.camera__note svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  margin-top: 2px;
+  color: var(--warning);
+}
+
+@media (max-width: 1020px) {
+  .camera {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .camera__side {
+    position: static;
+  }
+}
+
+@media (max-width: 720px) {
+  .feed {
+    min-height: 300px;
+    aspect-ratio: auto;
+    height: 340px;
+  }
+
+  .feed__frame {
+    padding: 22px 20px;
+  }
+
+  .feed__bar {
+    padding: 11px 14px;
+    gap: 10px;
+  }
+
+  .feed__meta--mono {
+    display: none;
+  }
+
+  .camera__stage {
+    padding: 12px;
+  }
+}
